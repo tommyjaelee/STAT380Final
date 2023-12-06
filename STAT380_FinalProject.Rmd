@@ -1,0 +1,91 @@
+---
+title: "STAT 380 Final Project"
+author: "Adithya Sadagopan, Tommy Lee, Alex Piechucki, and Vyacheslav Hlushko"
+date: "2023-12-04"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Final Project
+
+## Front Matter
+```{r  message=FALSE, warning=FALSE}
+library(tidyverse)
+library(randomForest)
+```
+
+### Read in Data
+```{r}
+maps <- read.csv(file = "data/CODMaps.csv",
+                 sep = ",",
+                 header = TRUE,
+                 row.names = NULL)
+p1 <- read.csv(file = "data/CODGames_p1_380.csv",
+                 sep = ",",
+                 header = TRUE,
+                 row.names = NULL,
+                 na.strings = c("", "NA"))
+p2 <- read.csv(file = "data/CODGames_p2_380.csv",
+                 sep = ",",
+                 header = TRUE,
+                 row.names = NULL,
+                 na.strings = c("", "NA"))
+gmodes <- read.csv(file = "data/CODGameModes.csv",
+                 sep = ",",
+                 header = TRUE,
+                 row.names = NULL)
+```
+
+
+## Final Project
+
+#### Part 1: Which maps are the most likely to win the map vote? 
+
+- Background Info: Prior to each online match, players in the game lobby are presented with two options for the battlefield of the upcoming game (`Map1` and `Map2`). The players have the option to vote and the resulting vote is recorded in the `MapVote` column. The winning map is listed in the `Choice` column. In the event of a tie vote, the map listed in `Map1` is chosen. (Games for which the player entered the lobby after the vote has taken place have no information in `Map1` and `Map2` but have the winning map presented in `Choice`.)
+
+- Notes: To answer this question, write a paragraph discussing how you plan to answer this question. Be sure to address the data quality issues mentioned below. Then, write code and answer the question. As part of your solution, you should calculate the proportion of times that each map was listed as a candidate (Map1 or Map2) and earned more votes than the other candidate. As part of this, you should consider whether a given map won the vote by getting more votes than the other option or was selected since it was `Map1` and the vote was a tie. You should also include a visualization of the results. There are some data quality issues (such as misspelled map names and extra (trailing) blanks in some entries) to solve for this problem. You can find the proper names/spellings in the CODMaps.csv file. To full receive full credit, you must write code to solve these issues rather than editing the .csv files. 
+
+#### Explanation:
+
+- We plan to answer the question of "which maps are the most likely to win the map vote?" in three phases. First, we will clean the data and fix the spelling errors. Next, we will look at the graphs to have a general idea of possible answers.Finally, we will include the proportions of the possibility by using the "summarize" operation on p1 and p2. We will take the average of both p1's and p2's proportion and store them as a new variable. We will not be joining p1 and p2 right now as the data appears the player data is unique and specific to each player and combining the set right now will lead to some misunderstandings when it comes to interpretation of the data at a later point. We will consider joining when we think it is relevant. 
+
+
+```{r}
+p1 %>% 
+  group_by(Map1) %>%
+  summarize(count =n())
+```
+
+```{r}
+p1 %>% 
+  group_by(Map2) %>%
+  summarize(count = n())
+```
+
+```{r}
+p1 %>% 
+  group_by(Choice) %>%
+  summarize(count = n())
+```
+
+
+```{r}
+p2 %>% 
+  group_by(Map1) %>%
+  summarize(count =n())
+```
+
+```{r}
+p2 %>% 
+  group_by(Map2) %>%
+  summarize(count = n())
+```
+
+```{r}
+# Fixing Spelling Errors
+
+```
+
