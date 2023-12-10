@@ -89,3 +89,15 @@ p2 %>%
 
 ```
 
+```{r}
+p1 <- p1 %>% 
+  mutate(Map1_Trimmed = str_trim(Map1),
+    MapOne = case_when(
+    Map1_Trimmed %in% c('Collateral', 'Collateral Striek',	'Collaterol Strike', 'Collateral Strike') ~ 'Collateral Strike', 
+    Map1_Trimmed %in% c('Deprogam', 'Deprogram') ~ 'Deprogram',
+    Map1_Trimmed %in% c('Drive-in', 'Drive-In') ~ 'Drive-In',
+    
+    TRUE ~ Map1_Trimmed))
+#stop continue later
+```
+
